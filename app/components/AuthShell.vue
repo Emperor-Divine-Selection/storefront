@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { Gem } from 'lucide-vue-next'
+
 interface Props {
+    /** 面板顶部那行等宽小字，像终端提示 */
+    code: string
     title: string
     subtitle: string
 }
@@ -8,63 +12,57 @@ defineProps<Props>()
 </script>
 
 <template>
-    <div class="flex min-h-dvh bg-[#f6f7f9]">
-        <!-- 左侧品牌区（窄屏隐藏） -->
-        <aside
-            class="relative hidden w-[46%] max-w-160 flex-col justify-between overflow-hidden bg-[#0f172a] p-12 lg:flex">
-            <!-- 一层极淡的光晕，避免整块死黑 -->
-            <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl">
-            </div>
-            <div class="pointer-events-none absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-indigo-400/8 blur-3xl">
-            </div>
+    <div class="relative flex min-h-dvh items-center justify-center overflow-hidden bg-[#0d1117] px-6 py-14">
+        <!-- 网格背景（中心亮、边缘淡出） -->
+        <div class="bg-grid pointer-events-none absolute inset-0"></div>
 
-            <NuxtLink to="/" class="relative flex items-center gap-2.5">
-                <span class="text-blue-400">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-6 w-6">
-                        <path d="M3 9.5 5 4h14l2 5.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M4 9.5V20h16V9.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M9 20v-6h6v6" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+        <!-- 两团氛围光，压到很淡：只是让画面不死板，不参与照明 -->
+        <div class="pointer-events-none absolute -left-40 -top-32 h-[440px] w-[440px] rounded-full bg-cyan-500/6 blur-[130px]">
+        </div>
+        <div class="pointer-events-none absolute -bottom-40 -right-32 h-[420px] w-[420px] rounded-full bg-fuchsia-500/6 blur-[130px]">
+        </div>
+
+        <div class="relative w-full max-w-105">
+            <!-- 品牌 -->
+            <NuxtLink to="/" class="mb-8 flex items-center gap-2.5">
+                <span class="text-cyan-400/80">
+                    <Gem class="h-5 w-5" :stroke-width="1.6" />
                 </span>
-                <span class="text-base font-semibold tracking-wide text-white">RuneShop</span>
+                <span class="font-mono text-[13px] tracking-[0.25em] text-slate-300">RUNESHOP</span>
             </NuxtLink>
 
-            <div class="relative max-w-sm">
-                <h2 class="text-2xl font-semibold leading-snug text-white">
-                    精选好物<br />从一次挑选开始
-                </h2>
-                <p class="mt-3 text-sm leading-6 text-slate-400">
-                    注册一个账号，既能购物，也能申请开店。<br />
-                    同一套身份，买家卖家自由切换。
-                </p>
-            </div>
+            <!-- 主面板 -->
+            <div class="relative border border-[#1b2230] bg-[#121721]/88 p-8 backdrop-blur-sm">
+                <!-- 四个角标，HUD 感 -->
+                <span class="pointer-events-none absolute -left-px -top-px h-3 w-3 border-l border-t border-cyan-400/40"></span>
+                <span class="pointer-events-none absolute -right-px -top-px h-3 w-3 border-r border-t border-cyan-400/40"></span>
+                <span class="pointer-events-none absolute -bottom-px -left-px h-3 w-3 border-b border-l border-cyan-400/40"></span>
+                <span class="pointer-events-none absolute -bottom-px -right-px h-3 w-3 border-b border-r border-cyan-400/40"></span>
 
-            <p class="relative text-xs text-slate-600">© 2026 RuneShop</p>
-        </aside>
+                <p class="font-mono text-[12px] tracking-widest text-cyan-400/60">{{ code }}</p>
+                <h1 class="mt-2.5 text-xl font-semibold text-slate-100">{{ title }}</h1>
+                <p class="mt-1.5 text-[13px] text-slate-400">{{ subtitle }}</p>
 
-        <!-- 右侧表单区 -->
-        <main class="flex flex-1 items-center justify-center px-6 py-12">
-            <div class="w-full max-w-95">
-                <!-- 窄屏时补一个 logo -->
-                <NuxtLink to="/" class="mb-8 flex items-center gap-2 lg:hidden">
-                    <span class="text-[#0f172a]">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                            class="h-5 w-5">
-                            <path d="M3 9.5 5 4h14l2 5.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M4 9.5V20h16V9.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M9 20v-6h6v6" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </span>
-                    <span class="text-sm font-semibold text-[#0f172a]">RuneShop</span>
-                </NuxtLink>
-
-                <h1 class="text-xl font-semibold text-[#0f172a]">{{ title }}</h1>
-                <p class="mt-1.5 text-[13px] text-gray-500">{{ subtitle }}</p>
-
-                <div class="mt-8">
+                <div class="mt-7">
                     <slot />
                 </div>
             </div>
-        </main>
+
+            <p class="mt-7 text-center font-mono text-[11px] tracking-widest text-slate-500">
+                © 2026 RUNESHOP
+            </p>
+        </div>
     </div>
 </template>
+
+<style scoped>
+.bg-grid {
+    background-image:
+        linear-gradient(to right, rgba(34, 211, 238, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(34, 211, 238, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    /* 中间清楚、四周淡出：满屏细线是最直接的视觉噪音来源 */
+    mask-image: radial-gradient(ellipse 65% 55% at 50% 45%, #000 10%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 45%, #000 10%, transparent 100%);
+}
+</style>

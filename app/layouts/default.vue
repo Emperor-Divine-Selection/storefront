@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Gem, LogOut } from 'lucide-vue-next'
+
 const { user, isLoggedIn, refresh, clear } = useCurrentUser()
 const { request } = useApi()
 
@@ -20,45 +22,41 @@ const handleLogout = async () => {
 </script>
 
 <template>
-    <div class="flex min-h-dvh flex-col bg-[#f6f7f9]">
-        <header class="sticky top-0 z-20 border-b border-[#e9ebef] bg-white/90 backdrop-blur">
+    <div class="flex min-h-dvh flex-col bg-[#0d1117]">
+        <header class="sticky top-0 z-20 border-b border-[#1b2230] bg-[#0d1117]/85 backdrop-blur">
             <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
                 <NuxtLink to="/" class="flex items-center gap-2.5">
-                    <span class="text-[#0f172a]">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                            class="h-6 w-6">
-                            <path d="M3 9.5 5 4h14l2 5.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M4 9.5V20h16V9.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M9 20v-6h6v6" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
+                    <span class="text-cyan-400/80">
+                        <Gem class="h-5 w-5" :stroke-width="1.6" />
                     </span>
-                    <span class="text-base font-semibold tracking-tight text-[#0f172a]">RuneShop</span>
+                    <span class="font-mono text-[13px] tracking-[0.25em] text-slate-200">RUNESHOP</span>
                 </NuxtLink>
 
                 <nav class="flex items-center gap-1 text-[13px]">
                     <template v-if="isLoggedIn">
                         <NuxtLink to="/apply"
-                            class="rounded-md px-3 py-1.5 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900">
+                            class="px-3 py-1.5 text-slate-400 transition-colors hover:text-cyan-300">
                             我要开店
                         </NuxtLink>
                         <NuxtLink to="/account"
-                            class="rounded-md px-3 py-1.5 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900">
+                            class="px-3 py-1.5 text-slate-400 transition-colors hover:text-cyan-300">
                             {{ user?.username }}
                         </NuxtLink>
                         <button type="button" :disabled="loggingOut"
-                            class="rounded-md px-3 py-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 disabled:opacity-50"
+                            class="flex items-center gap-1.5 px-3 py-1.5 text-slate-500 transition-colors hover:text-slate-300 disabled:opacity-50"
                             @click="handleLogout">
+                            <LogOut class="h-3.5 w-3.5" :stroke-width="1.6" />
                             退出
                         </button>
                     </template>
 
                     <template v-else>
                         <NuxtLink to="/login"
-                            class="rounded-md px-3 py-1.5 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900">
+                            class="px-3 py-1.5 text-slate-400 transition-colors hover:text-cyan-300">
                             登录
                         </NuxtLink>
                         <NuxtLink to="/register"
-                            class="rounded-md bg-[#0f172a] px-4 py-1.5 font-medium text-white transition-colors hover:bg-[#1e293b]">
+                            class="bg-[#0e7490] px-4 py-1.5 font-medium text-cyan-50 transition-all hover:bg-[#0891b2] hover:shadow-[0_0_20px_-6px_rgba(34,211,238,0.45)]">
                             注册
                         </NuxtLink>
                     </template>
@@ -70,10 +68,10 @@ const handleLogout = async () => {
             <slot />
         </main>
 
-        <footer class="border-t border-[#e9ebef] bg-white">
+        <footer class="border-t border-[#1b2230]">
             <div
-                class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-6 py-6 text-xs text-gray-400 sm:flex-row">
-                <span>© 2026 RuneShop</span>
+                class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-6 py-6 font-mono text-[11px] tracking-[0.12em] text-slate-600 sm:flex-row">
+                <span>© 2026 RUNESHOP</span>
                 <span>认真挑选每一件商品</span>
             </div>
         </footer>
