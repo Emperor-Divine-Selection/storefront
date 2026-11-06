@@ -13,7 +13,11 @@ interface ApiEnvelope<T> {
 
 interface RequestOptions {
     method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-    body?: Record<string, unknown>
+    /**
+     * JSON 对象会自动序列化；FormData 原样交给浏览器 ——
+     * 千万别给 FormData 手动设 Content-Type，multipart 的 boundary 只有浏览器能生成
+     */
+    body?: Record<string, unknown> | FormData
     query?: Record<string, string | number>
 }
 

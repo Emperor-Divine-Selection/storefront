@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Gem, LogOut } from 'lucide-vue-next'
 
 const { user, isLoggedIn, refresh, clear } = useCurrentUser()
 const { request } = useApi()
 
 const loggingOut = ref(false)
+
+const initial = computed(() => (user.value?.username ?? 'R').slice(0, 1).toUpperCase())
 
 const handleLogout = async () => {
     loggingOut.value = true
@@ -39,7 +42,13 @@ const handleLogout = async () => {
                             我要开店
                         </NuxtLink>
                         <NuxtLink to="/account"
-                            class="px-3 py-1.5 text-slate-400 transition-colors hover:text-cyan-300">
+                            class="flex items-center gap-2 px-3 py-1.5 text-slate-400 transition-colors hover:text-cyan-300">
+                            <img v-if="user?.avatar" :src="user.avatar" :alt="user.username"
+                                class="h-6 w-6 border border-[#232c3d] object-cover" />
+                            <span v-else
+                                class="flex h-6 w-6 items-center justify-center bg-[#1b2230] font-mono text-[11px] text-cyan-300">
+                                {{ initial }}
+                            </span>
                             {{ user?.username }}
                         </NuxtLink>
                         <button type="button" :disabled="loggingOut"
